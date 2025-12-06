@@ -37,11 +37,19 @@ const createVehicle = async (req: Request, res: Response) => {
 const getVehicle = async (req: Request, res: Response) => {
   try {
     const result = await vehicleServices.getVehicle();
-    res.status(200).json({
-      success: true,
-      message: "Vehicles retrieved successfully",
-      data: result.rows,
-    });
+    if (result.rowCount == 0) {
+      res.status(200).json({
+        success: true,
+        message: "No vehicles Found",
+        data: [],
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "Vehicles retrieved successfully",
+        data: result.rows,
+      });
+    }
   } catch (error: any) {
     res.status(500).json({
       success: false,

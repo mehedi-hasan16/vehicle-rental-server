@@ -12,6 +12,7 @@ const createBooking = async (
     "SELECT vehicle_name, daily_rent_price FROM vehicles WHERE id = $1",
     [vehicle_id]
   );
+  console.log(vehicleResult);
   const total_price = rentDays * vehicleResult.rows[0].daily_rent_price;
 
   const result = await pool.query(
@@ -54,6 +55,15 @@ const updateBooking = async (status: string, id: string) => {
     `UPDATE bookings SET status = $1 WHERE id = $2 RETURNING *`,
     [status, id]
   );
+  if (status === "returned") {
+    const result = await pool.query(`SELECT bookings. * ,
+     json_build_object(
+      'availability_status', vehicles.availability_status
+    ) AS vehicle
+    FROM bookings
+    JOIN vehicles ON bookings.vehicle_id = vehicles.id`);
+    return result;
+  }
   return result;
 };
 

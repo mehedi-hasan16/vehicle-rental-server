@@ -1,19 +1,21 @@
 import { Request, Response } from "express";
 import { userService } from "./user.service";
 
-const createUser = async (req: Request, res: Response) => {
-  const { name, email, password, phone, role } = req.body;
+// update user
+const updateUser = async (req: Request, res: Response) => {
+  const { name, email, phone, role } = req.body;
+  const id = req.params.userId;
   try {
-    const result = await userService.createUser(
+    const result = await userService.updateUser(
       name,
       email,
-      password,
       phone,
-      role
+      role,
+      id as string
     );
     res.status(201).json({
       success: true,
-      message: "User registered successfully",
+      message: "User updated successfully",
       data: result.rows[0],
     });
   } catch (error: any) {
@@ -24,14 +26,13 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-// get login user data
+// get user
 const getUser = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
   try {
-    const result = await userService.getUser(email);
+    const result = await userService.getUser();
     res.status(200).json({
       success: true,
-      message: "Login successful",
+      message: "Users retrieved successfully",
       data: result.rows,
     });
   } catch (error: any) {
@@ -42,7 +43,26 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 
+// delete user
+const deleteUser = async (req: Request, res: Response) => {
+  const id = req.params.userId;
+  try {
+    const result = await userService.deleteUser(id!);
+    res.status(200).json({
+      success: true,
+      message: "User deleted successfully",
+      // data: result.rows,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 export const userControllers = {
-  createUser,
+  updateUser,
+  deleteUser,
   getUser,
 };

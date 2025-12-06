@@ -29,7 +29,7 @@ const getSingleVehicle = async (id: string) => {
   const result = await pool.query(`SELECT * FROM vehicles WHERE id = $1`, [id]);
   return result;
 };
-
+// update vehicle
 const updateVehicle = async (
   vehicle_name: string,
   type: string,
@@ -52,6 +52,7 @@ const updateVehicle = async (
   return result;
 };
 
+// delete vehicle
 const deleteVehicle = async (id: string) => {
   const result = await pool.query(`DELETE FROM vehicles WHERE id = $1`, [id]);
   return result;

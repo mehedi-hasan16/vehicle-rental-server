@@ -24,6 +24,25 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
+// get login user data
+const getUser = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  try {
+    const result = await userService.getUser(email);
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      data: result.rows,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 export const userControllers = {
   createUser,
+  getUser,
 };

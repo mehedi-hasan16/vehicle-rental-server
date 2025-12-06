@@ -5,19 +5,19 @@ Live URL: https://vehicle-rental-server-olive.vercel.app
 
 ### Features
 
-**1. Authentication**
+**1. Authentication:**
 JWT authentication, bcryptjs
 
-**2. Vehicle Management**
+**2. Vehicle Management:**
 Add, update, delete vehicles, get by id, get all vehicles
 
-**3. User Management**
+**3. User Management:**
 sign up and update existing user
 
-**4. Booking System**
+**4. Booking System:**
 Create bookings, update booking
 
-**5. Database**
+**5. Database:**
 PostgreSQL database for secure and scalable storage
 
 ### Technology Stack
